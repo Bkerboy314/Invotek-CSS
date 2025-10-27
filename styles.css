@@ -1,0 +1,880 @@
+/*Version 1.7.4, last updated 2025-19-01*/
+/*Massive thanks to https://0x5fbe.id for inspiration*/
+
+/*Fonts*/
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-display: swap;
+    font-weight: 300;
+    src: local('JetBrains Mono NL Light'), url('/fonts/JetBrains/JetBrainsMonoNL-Light-2.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-display: swap;
+    font-weight: 400;
+    src: local('JetBrains Mono NL Regular'), url('/fonts/JetBrains/JetBrainsMonoNL-Regular-2.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-display: swap;
+    font-weight: 400;
+    src: local('JetBrains Mono NL Italic'), url('/fonts/JetBrains/JetBrainsMonoNL-Italic-2.woff2');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-display: swap;
+    font-weight: 600;
+    src: local('JetBrains Mono NL SemiBold'), url('/fonts/JetBrains/JetBrainsMonoNL-SemiBold-2.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-display: swap;
+    font-weight: 800;
+    src: local('JetBrains Mono NL ExtraBold'), url('/fonts/JetBrains/JetBrainsMonoNL-ExtraBold-2.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NotoSerif';
+    font-display: swap;
+    font-weight: 400;
+    src: local('Noto Serif Regular'), url('/fonts/Noto Serif/NotoSerif-Regular.woff2');
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NotoSerif';
+    font-display: swap;
+    font-weight: 400;
+    src: local('Noto Serif Italic'), url('/fonts/Noto Serif/NotoSerif-Italic.woff2');
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'NotoSerif';
+    font-display: swap;
+    font-weight: 700;
+    src: local('Noto Serif Bold'), url('/fonts/Noto Serif/NotoSerif-Bold.woff2');
+    font-style: normal;
+}
+
+body {
+    max-width: 40rem;
+    margin: 0 auto;
+    outline: 1px solid rgba(0, 0, 0, 0.5);
+    outline-offset: -10px;
+    padding: 50px;
+    opacity: 1;
+}
+
+
+/*Text and whatchamacallit styling JetBrainsMono*/
+* {
+    font-family: 'JetBrains Mono', monospace;
+    color: #181818;
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: -0.5px;
+}
+
+b {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bolder;
+    font-style: normal;
+}
+
+i {
+    font-family: 'JetBrains Mono', monospace;
+    font-style: italic;
+}
+
+u {
+    position: relative;
+    text-decoration: none;
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.noto-serif {
+  font-family: 'NotoSerif', serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.5px;
+  color: #7f7f7f;
+}
+
+.noto-serif b {
+  font-weight: bolder; /* uses NotoSerif-Bold */
+  font-style: normal;
+}
+
+.noto-serif i {
+  font-style: italic; /* uses NotoSerif-Italic */
+}
+
+u::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, #ce99ff, #5b00af, #ce99ff);
+    background-size: 200% 100%;
+    animation: underline-gradient 3s linear infinite;
+}
+
+/*Purchase classifications and transparency stuff*/
+.purchase-red, .purchase-green, .purchase-yellow, .purchase-blue {
+    padding: 0.1rem 0.3rem;
+    white-space: nowrap;
+    color: black;
+}
+
+.purchase-red {
+    border: 1px solid red;
+    background: linear-gradient(to top, #ffbaba, #fff3f3);
+}
+
+.purchase-green {
+    border: 1px solid #00ff00;
+    background: linear-gradient(to top, #85ff85, #f5fff5);
+}
+
+.purchase-yellow {
+    border: 1px solid yellow;
+    background: linear-gradient(to top, #ffff00, #ffffd7)
+}
+
+.purchase-blue {
+    border: 1px solid blue;
+    background: linear-gradient(to top, #cacaff, #f8f8ff);
+}
+
+.transparency-title {
+    font-size: 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}
+
+.transparency-value {
+    font-size: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bolder;
+    color: #7700e6;
+}
+
+.transparency-value span {
+    font-size: 1.1rem;
+    color: #181818;
+}
+
+.transparency-value .g {
+    color: #006600;
+}
+
+.transparency-value .r {
+    color: #b30000;
+}
+
+/*All hope of organisation lost beyond this point*/
+h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: bolder;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+h1::after {
+    content: '';
+    flex-grow: 1;
+    height: 4px;
+    margin-left: 10px;
+    background: linear-gradient(to right, black, white);
+}
+
+details.h2 summary {
+    font-family: 'JetBrains Mono', monospace;
+    color: black;
+    font-size: 1.1rem;
+    font-weight: bolder;
+}
+
+.testimonial {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+}
+
+details.h2, details.h3 {
+    position: relative;
+}
+
+details.h2::before, details.h3::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 2px;
+    background: #7700e6;
+}
+
+details.h3 {
+    margin-left: 20px;
+}
+
+details.h3 summary {
+    font-family: 'JetBrains Mono', monospace;
+    color: black;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.info-head, .info p, summary::after {
+    font-family: 'JetBrains Mono', monospace;
+    color: #595959;
+    font-weight: light;
+}
+
+.directory {
+    font-family: 'JetBrains Mono', monospace;
+    color: #cccccc;
+    font-weight: light;
+}
+
+*::before, *::after {
+    font-family: 'JetBrains Mono', monospace;
+    color: #cccccc;
+}
+
+*::after {
+    font-size: 0.8em;
+}
+
+h1::before, details.h2 summary::before, details.h3 summary::before {
+    margin-right: 0.5rem;
+}
+
+h1::before {
+    font-weight: bold;
+    content: '# ';
+}
+
+details.h2 summary::before {
+    font-weight: normal;
+    content: '## ';
+}
+
+details.h3 summary::before {
+    font-weight: normal;
+    content: '### ';
+}
+
+
+.link-container {
+    padding-left: 10px;
+}
+
+.link-container p, .link {
+    display: flex;
+    align-items: center;
+    margin: 0.3rem 0;
+}
+
+.link-container p::before, .link::before {
+    content: '=> ';
+    margin-right: 0.5rem;
+}
+
+.directory::before {
+    content: '$ ';
+}
+
+.info-head::before {
+    content: '> ';
+}
+
+details.h2 summary, details.h3 summary {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 0;
+}
+
+summary::after {
+    content: '(click to show)';
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+details[open] > summary::after { 
+    content: '(click to hide)'; 
+}
+
+details[open] {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+}
+
+a {
+    text-underline-offset: 0.2rem;
+    color: #7700e6;
+    padding: 0.5em 0.4em;
+}
+
+summary:focus-visible, summary:hover {
+    outline: 3px solid #7700e6;
+}
+
+summary:hover {
+    outline-width: 1px;
+}
+
+a:focus, a:hover, ::selection {
+    color: white;
+    background-color: #7700e6;
+}
+
+a:focus-visible {
+    font-family: "JetBrains Mono";
+    font-weight: bolder;
+    text-decoration-thickness: 2px;
+    outline: 3px solid #000000;
+    outline-offset: 2px;
+}
+
+a.img88x31, a.img88x31 img {
+    padding: 0;
+    display: inline-block;
+}
+
+li {
+    margin: 1rem 0;
+    line-height: 1.4rem;
+}
+
+.info-highlight, .ul-info-highlight, .announcement-highlight {
+    position: relative;
+}
+
+.info-highlight::before, .ul-info-highlight::before, .announcement-highlight::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #ce99ff, #5b00af, #ce99ff);
+    background-size: 100% 200%;
+    animation: gradient 3s linear infinite;
+}
+
+.ul-info-highlight::before {
+    left: 0px;
+}
+
+.announcement-highlight {
+    margin: 2rem 0;
+}
+
+.announcement-highlight::before {
+    background: linear-gradient(to bottom, #ffe600, #ad7100, #ffe600);
+    background-size: 100% 200%;
+}
+
+.item-container, .warning-container, .info-container, .waiting-container, .success-container, .link2, .link3 {
+    display: flex;
+    align-items: center;
+}
+
+.item-container {
+    margin: 1rem 0;
+}
+
+.item-container-container {
+    display: grid;
+    justify-content: center;
+}
+
+.usp-container-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.usp-container:not(.title) {
+    border: 1px solid #7700e6;
+    width: 250px;
+    margin: 10px;
+    padding: 8px;
+}
+
+.usp-container .title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.usp-container img {
+    margin-right: 8px;
+    width: 32px;
+    height: 32px;
+}
+
+.usp-container .title p {
+    font-family: 'JetBrains Mono';
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
+.warning-container, .info-container, .waiting-container, .success-container, .link2, .link3 {
+    margin: 0.5rem 0;
+    border: 3px solid #ff0000;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.info-container {
+    border-color: #0000ff;
+}
+
+.waiting-container {
+    border-color: #808080;
+}
+
+.success-container {
+    border-color: #008000;
+}
+
+.link2, .link3 {
+    border-color: #7700e6;
+    background: linear-gradient(to top, #e4ccfa, #fbf7fe);
+}
+
+.link3 {
+    height: 16px;
+}
+
+.link3 {
+    width: fit-content;
+}
+
+.link2:hover:not(:focus), .link3:hover:not(:focus) {
+    background: linear-gradient(to top, #e4ccfa, #fbf7fe);
+    color: #7700e6;
+}
+
+.link2:focus, .link3:focus {
+    background: black;
+}
+
+.link2:focus-visible p, .link3:focus-visible p {
+    font-family: "JetBrains Mono";
+    font-weight: bolder;
+}
+
+.link2:focus p, .link2:focus b, .link3:focus p, .link3:focus b {
+    color: white;
+}
+
+.link2 .img, .link3 .img {
+    position: relative;
+    display: inline-block;
+    height: 24px;
+}
+
+.link2 .img {
+    margin-left: auto;
+}
+
+.link3 .img {
+    margin-right: 10px;
+}
+
+.link2 img, .link3 img {
+    margin-right: 0;
+    position: relative;
+}
+
+.link3 img {
+    transform: rotate(180deg);
+}
+
+.link2 .img::before, .link3 .img::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: white;
+    border-radius: 50%;
+    border: 1px solid black;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.link3 .img::before {
+    width: 22px;
+    height: 22px;
+}
+
+.link2 .img:hover::before, .link2 .img:focus::before, .link3 .img:hover::before, .link3 .img:focus::before {
+    background-color: black;
+    border-color: white;
+}
+
+.link2 .img:hover img, .link2 .img:focus img, .link3 .img:hover img, .link3 .img:focus img {
+    filter: invert(100%);
+}
+
+.info {
+    padding-right: 5px;
+}
+
+.info p, .link-container p, .link-container a, .link3 p, .small-text {
+    font-size: 0.85rem;
+}
+
+.smaller-text {
+    font-size: 0.75rem;
+}
+
+.bottom {
+    margin-top: 4rem;
+    display: flex;
+    border-top: 1px solid black;
+    padding-top: 1rem;
+}
+
+.bottom div {
+    flex: 1;
+}
+
+@media (max-width: 500px) {
+    .bottom {
+        flex-direction: column;
+    }
+}
+
+.warning-container img, .info-container img, .waiting-container img, .success-container img {
+    margin-right: 10px;
+}
+
+.icon, .icon-r, .icon2, .icon-nodarktheme {
+    margin-right: 1em;
+    width: 24px;
+    height: 24px;
+}
+
+.icon-r {
+    transform: rotate(180deg);
+}
+
+.icon3 {
+    padding-right: 0.5rem;
+    margin-right: 1rem;
+    border-right: 4px solid #bbb;
+}
+
+.testimonial {
+    padding-left: 1rem;
+    border-left: 4px solid #bbb;
+}
+
+pre, code {
+    background: #313131;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 2px;
+    font-size: 0.8rem;
+}
+
+pre {
+    padding: 5px;
+    overflow-x: auto;
+}
+
+.no-overflow {
+    white-space: pre-wrap;
+}
+
+/*Things for forms*/
+.required::after {
+    color: red;
+    font-family: "JetBrains Mono";
+    font-weight: bolder;
+    content: ' *';
+    font-size: 1em;
+}
+
+.required-text {
+    color: red;
+    font-family: "JetBrains Mono";
+    font-weight: bolder;
+}
+
+input {
+    padding: 0.3rem;
+    max-width: 300px;
+    width: 100%;
+    border: solid 1px black;
+    display: block;
+    margin: 0.1rem 0;
+}
+
+input:hover, textarea:hover {
+    border: solid 1px #7700e6;
+    background-color: #141414;
+    color: white;
+}
+
+input[type="number"] {
+    max-width: 50px;
+    text-align: center;
+    display: inline;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin: 0;
+    padding: 0;
+    width: auto;
+    display: inline;
+}
+
+::placeholder {
+    color: #bbbbbb;
+}
+
+textarea {
+    display: block;
+    margin: 0.1rem 0;
+    border: solid 1px black;
+}
+
+p span {
+    color: black;
+}
+
+.price-bold, .price-bold::before, label, fieldset legend {
+    font-family: "JetBrains Mono";
+    font-weight: bolder;
+    color: black;
+}
+
+.price-bold::before {
+    content: '£';
+}
+
+fieldset label, .regular {
+    font-family: "JetBrains Mono";
+    font-weight: normal;
+}
+
+button {
+    border: 2px solid #7700e6;
+    background-color: #f0f0f0;
+    margin: 0.1rem 0;
+}
+
+button:hover {
+    background-color: #141414;
+    color: white;
+}
+
+.no-display, .charity {
+    display: none;
+}
+
+/*Animation definitions*/
+@keyframes gradient {
+    0% {
+        background-position: 0% 200%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes underline-gradient {
+    0% {
+        background-position: 200% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+/*Dark mode colours (also disorganised)*/
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #0f0f0f;
+    }
+
+    *, .transparency-value span {
+        color: #e3e3e3;
+    }
+
+    h1, details.h2 summary, details.h3 summary, b {
+        color: white;
+    }
+
+    *::before, *::after, .directory {
+        color: #707070;
+    }
+
+    .info-head, .info p, summary::after {
+        color: #a1a1a1;
+    }
+
+    a:not(.fancy), .transparency-value {
+        color: #00ff88;
+    }
+
+    summary:focus-visible, summary:hover {
+        outline-color: #00ff88;
+    }
+
+    a:focus, a:hover, ::selection {
+        color: black;
+        background-color: #00ff88;
+    }
+
+    a:focus-visible {
+        outline-color: white;
+    }
+
+    input, textarea {
+        border-color: #ccc;
+        background-color: #222;
+    }
+    
+    input:hover, textarea:hover {
+        border: solid 1px #00ff88;
+        background-color: white;
+        color: black;
+    }
+    
+    ::placeholder {
+        color: #888;
+    }
+    
+    p span, .price-bold, .price-bold::before, label, fieldset legend, .usp-container .title p, .transparency-title, .testimonial, .purchase-red, .purchase-green, .purchase-yellow, .purchase-blue {
+        color: white;
+    }
+    
+    button {
+        border-color: #00ff88;
+        background-color: #222;
+    }
+    
+    button:hover {
+        background-color: white;
+        color: black;
+    }
+
+    h1::after {
+        background: linear-gradient(to right, white, #0f0f0f);
+    }
+
+    .info-highlight::before, .ul-info-highlight::before {
+        background: linear-gradient(to bottom, #00ff88, #006335, #00ff88);
+        background-size: 100% 200%;
+    }
+
+    u::after {
+        background: linear-gradient(to right, #00ff88, #006335, #00ff88);
+        background-size: 200% 100%;
+    }
+
+    details.h2::before, details.h3::before {
+        background: #00ff88;
+    }
+
+    .icon, .icon-r, .icon3, .icon4 {
+        filter: invert(100%);
+    }
+
+    .icon3 {
+        border-right-color: #777;
+    }
+
+    .link2, .link3 {
+        border-color: #00ff88;
+        background: linear-gradient(to top, #00ff8833, #00ff8811);
+    }
+
+    .link2:hover:not(:focus), .link3:hover:not(:focus) {
+        color: #00ff88;
+        background: linear-gradient(to top, #00ff8833, #00ff8811);
+    }
+
+    .link2:focus, .link3:focus {
+        background: white;
+        color: black;
+    }
+
+    .link2:focus p, .link2:focus b, .link3:focus p, .link3:focus b {
+        color: black;
+    }
+
+    .link2 .img::before, .link3 .img::before {
+        background-color: black;
+        border: 1px solid white;
+    }
+
+    .link2 .img:hover::before, .link2 .img:focus::before, .link3 .img:hover::before, .link3 .img:focus::before {
+        background-color: white;
+        border-color: black;
+    }
+
+    .link2 .img:hover img, .link2 .img:focus img, .link3 .img:hover img, .link3 .img:focus img {
+        filter: none;
+    }
+
+    .usp-container:not(.title) {
+        border-color: #00ff88;
+    }
+
+    .bottom {
+        border-color: white;
+    }
+
+    body {
+        outline-color: rgba(255, 255, 255, 0.5);
+    }
+    
+    .purchase-red {
+        background: linear-gradient(to top, rgba(255, 186, 186, 0.4), rgba(255, 243, 243, 0.1));
+    }
+    
+    .purchase-green {
+        background: linear-gradient(to top, rgba(133, 255, 133, 0.4), rgba(245, 255, 245, 0.1));
+    }
+    
+    .purchase-yellow {
+        background: linear-gradient(to top, rgba(255, 255, 0.4), rgba(255, 255, 215, 0.1))
+    }
+    
+    .purchase-blue {
+        background: linear-gradient(to top, rgba(202, 202, 255, 0.4), rgba(248, 248, 255, 0.1));
+    }
+
+    .transparency-value .g {
+        color: #00ff00;
+    }
+    
+    .transparency-value .r {
+        color: #FF7070;
+    }
+}
